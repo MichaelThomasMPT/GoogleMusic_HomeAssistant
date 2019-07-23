@@ -361,7 +361,7 @@ class GmusicComponent(MediaPlayerDevice):
 
     def _update_playlists(self, now=None):
         """ Sync playlists from Google Music library """
-        self._playlist_to_index = {}
+        self._playlist_to_index = {}       
         self._playlists = self._api.get_all_user_playlist_contents()
         idx = -1
         for playlist in self._playlists:
@@ -372,7 +372,7 @@ class GmusicComponent(MediaPlayerDevice):
             self._playlist_to_index[name] = idx
 
         playlists = list(self._playlist_to_index.keys())
-        self._attributes['playlists'] = playlists
+        self._attributes['playlists'] = playlists.sort()
 
         data = {"options": list(playlists), "entity_id": self._playlist}
         self.hass.services.call(input_select.DOMAIN, input_select.SERVICE_SET_OPTIONS, data)
